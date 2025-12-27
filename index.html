@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Listening Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                <h1>Music Platform</h1>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-section="library">Library</button>
+                <button class="nav-btn" data-section="playlists">Playlists</button>
+                <button class="nav-btn" data-section="player">Player</button>
+                <button class="nav-btn" data-section="stats">Statistics</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Quick Actions</h3>
+                <button class="action-btn" onclick="showAddSongModal()">
+                    <span>➕</span> Add Song
+                </button>
+                <button class="action-btn" onclick="showCreatePlaylistModal()">
+                    <span>📝</span> New Playlist
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>My Playlists</h3>
+                <div id="playlistList" class="playlist-list">
+                    <!-- Playlists will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Genres</h3>
+                <div id="genreList" class="genre-list">
+                    <!-- Genres will be dynamically added here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Library Section -->
+            <section id="library" class="section active">
+                <div class="section-header">
+                    <h2>Music Library</h2>
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Search songs, artists, albums...">
+                        <button onclick="searchSongs()">🔍</button>
+                    </div>
+                </div>
+
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">All Songs</button>
+                    <button class="filter-btn" data-filter="artists">Artists</button>
+                    <button class="filter-btn" data-filter="albums">Albums</button>
+                </div>
+
+                <div id="libraryContent" class="library-content">
+                    <!-- Songs will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Playlists Section -->
+            <section id="playlists" class="section">
+                <div class="section-header">
+                    <h2>Your Playlists</h2>
+                    <button class="primary-btn" onclick="showCreatePlaylistModal()">Create Playlist</button>
+                </div>
+
+                <div id="playlistsContent" class="playlists-grid">
+                    <!-- Playlists will be displayed here -->
+                </div>
+            </section>
+
+            <!-- Player Section -->
+            <section id="player" class="section">
+                <div class="section-header">
+                    <h2>Now Playing</h2>
+                </div>
+
+                <div class="player-main">
+                    <div class="album-art">
+                        <div class="album-placeholder">🎵</div>
+                    </div>
+
+                    <div class="song-info">
+                        <h3 id="currentSongTitle">No song playing</h3>
+                        <p id="currentSongArtist">Select a song to play</p>
+                        <p id="currentSongAlbum"></p>
+                    </div>
+
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="previousSong()">⏮️</button>
+                        <button class="control-btn play-btn" onclick="togglePlay()">▶️</button>
+                        <button class="control-btn" onclick="nextSong()">⏭️</button>
+                    </div>
+
+                    <div class="player-options">
+                        <button class="option-btn" id="shuffleBtn" onclick="toggleShuffle()">🔀</button>
+                        <button class="option-btn" id="repeatBtn" onclick="toggleRepeat()">🔁</button>
+                    </div>
+
+                    <div class="queue-section">
+                        <h4>Up Next</h4>
+                        <div id="queueList" class="queue-list">
+                            <!-- Queue items will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="stats" class="section">
+                <div class="section-header">
+                    <h2>Statistics</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎵</div>
+                        <div class="stat-info">
+                            <h3 id="totalSongs">0</h3>
+                            <p>Total Songs</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👨‍🎤</div>
+                        <div class="stat-info">
+                            <h3 id="totalArtists">0</h3>
+                            <p>Artists</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💿</div>
+                        <div class="stat-info">
+                            <h3 id="totalAlbums">0</h3>
+                            <p>Albums</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <h3 id="totalPlaylists">0</h3>
+                            <p>Playlists</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="most-played">
+                    <h3>Most Played Songs</h3>
+                    <div id="mostPlayedList" class="most-played-list">
+                        <!-- Most played songs will appear here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Add Song Modal -->
+    <div id="addSongModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Song</h2>
+                <button class="close-btn" onclick="closeModal('addSongModal')">&times;</button>
+            </div>
+            <form id="addSongForm">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="songTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Artist</label>
+                    <input type="text" id="songArtist" required>
+                </div>
+                <div class="form-group">
+                    <label>Album</label>
+                    <input type="text" id="songAlbum" required>
+                </div>
+                <div class="form-group">
+                    <label>Duration (seconds)</label>
+                    <input type="number" id="songDuration" required>
+                </div>
+                <div class="form-group">
+                    <label>Genre</label>
+                    <input type="text" id="songGenre" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" onclick="closeModal('addSongModal')">Cancel</button>
+                    <button type="submit" class="primary-btn">Add Song</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Playlist Modal -->
+    <div id="createPlaylistModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Playlist</h2>
+                <button class="close-btn" onclick="closeModal('createPlaylistModal')">&times;</button>
+            </div>
+            <form id="createPlaylistForm">
+                <div class="form-group">
+                    <label>Playlist Name</label>
+                    <input type="text" id="playlistName" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="playlistDescription" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="secondary-btn" onclick="closeModal('createPlaylistModal')">Cancel</button>
+                    <button type="submit" class="primary-btn">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
