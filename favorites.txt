@@ -1,0 +1,7 @@
+# Playlist: My Favorites
+# Description: Best songs ever!
+# Songs: 3
+
+Blinding Lights|The Weeknd|After Hours|/music/blinding_lights.mp3|200|Pop
+Levitating|Dua Lipa|Future Nostalgia|/music/levitating.mp3|203|Pop
+Watermelon Sugar|Harry Styles|Fine Line|/music/watermelon.mp3|174|Pop
